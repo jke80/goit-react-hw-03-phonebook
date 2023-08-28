@@ -15,6 +15,8 @@ const INITIAL_STATE = {
   contacts: [...TEST_CONTACTS],
   filter: '',
 };
+
+const LS_KEY = 'savedContacts';
 export class App extends React.Component {
   state = { ...INITIAL_STATE };
 
@@ -49,11 +51,24 @@ export class App extends React.Component {
   };
 
   componentDidMount() {
-    console.log('mount');
+    try {
+      const contacts = JSON.parse(localStorage.getItem(LS_KEY));
+      if (contacts) {
+        this.setState({ contacts });
+      }
+    } catch (err) {
+      console.error('Get state error: ', err.message);
+    }
   }
 
-  componentDidUpdate() {
-    console.log('update');
+  componentDidUpdate(_, prevState) {
+    try {
+      if (prevState.contacts.length !== this.state.contacts.length) {
+        localStorage.setItem(LS_KEY, JSON.stringify(this.state.contacts));
+      }
+    } catch (err) {
+      console.error('Set state error: ', err.message);
+    }
   }
 
   render() {
