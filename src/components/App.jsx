@@ -48,6 +48,14 @@ export class App extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  componentDidMount() {
+    console.log('mount');
+  }
+
+  componentDidUpdate() {
+    console.log('update');
+  }
+
   render() {
     return (
       <div
