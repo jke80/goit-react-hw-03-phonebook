@@ -63,7 +63,7 @@ export class App extends React.Component {
 
   componentDidUpdate(_, prevState) {
     try {
-      if (prevState.contacts.length !== this.state.contacts.length) {
+      if (prevState.contacts !== this.state.contacts) {
         localStorage.setItem(LS_KEY, JSON.stringify(this.state.contacts));
       }
     } catch (err) {
